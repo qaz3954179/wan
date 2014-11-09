@@ -1,0 +1,18 @@
+!DOCTYPE html
+<html>
+<head>
+<title>当前位置</title>
+</head>
+<body>
+<div id="loc"></div>
+<script type="text/javascript">
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position){
+        document.getElementById('loc').value = position.coords.latitude;
+    });
+    alert('ok');
+}
+else alert('fail');
+</script>
+</body>
+</html>

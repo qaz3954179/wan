@@ -1,0 +1,25 @@
+<?php return array (
+  0 => 'CREATE TABLE `xiaozu_goodssign` (
+  `id` int(10) NOT NULL auto_increment,
+  `name` varchar(50) NOT NULL,
+  `imgurl` varchar(255) default NULL,
+  `type` varchar(50) default NULL COMMENT \'goods商品,shop店铺,cx促销3类型\',
+  `instro` varchar(100) default NULL COMMENT \'说明\',
+  `typevalue` int(1) NOT NULL default \'0\' COMMENT \'0无,1新品，2热门，3推荐\',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8',
+  1 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'18\',\'赔付\',\'/upload/goods/20131109021724515.gif\',\'shop\',\'配送时间内未赔付费用减半\',\'0\')',
+  2 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'12\',\'招牌菜\',\'/upload/goods/20131109020806147.gif\',\'goods\',\'店铺招牌菜\',\'0\')',
+  3 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'11\',\'新商品\',\'/upload/goods/20131109020524999.gif\',\'goods\',\'店铺新商品\',\'0\')',
+  4 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'13\',\'推荐商品\',\'/upload/goods/20131109020843123.gif\',\'goods\',\'店铺推荐商品\',\'0\')',
+  5 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'14\',\'商品特点辣\',\'/upload/goods/20131109020911220.gif\',\'goods\',\'商品比较辣\',\'0\')',
+  6 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'15\',\'甜\',\'/upload/goods/20131109020950427.gif\',\'goods\',\'商品比较甜\',\'0\')',
+  7 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'16\',\'咸\',\'/upload/goods/20131109021030685.gif\',\'goods\',\'商品比较咸\',\'0\')',
+  8 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'17\',\'新店铺\',\'/upload/goods/20131109021533257.gif\',\'shop\',\'新开店铺\',\'0\')',
+  9 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'19\',\'推荐店铺\',\'/upload/goods/20131109021825391.gif\',\'shop\',\'推荐商家\',\'0\')',
+  10 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'20\',\'使用环保盒\',\'/upload/goods/20131109021909573.gif\',\'shop\',\'此店铺送餐使用环保盒\',\'0\')',
+  11 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'21\',\'赠品\',\'/upload/goods/20131109022014892.gif\',\'cx\',\'该店铺有可能送赠品\',\'0\')',
+  12 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'22\',\'满就送\',\'/upload/goods/20131109022109542.gif\',\'cx\',\'店铺参加购物车满就送活动\',\'0\')',
+  13 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'23\',\'限时购\',\'/upload/goods/20131109022145679.gif\',\'cx\',\'店铺指定时间购买有优惠\',\'0\')',
+  14 => 'INSERT INTO `xiaozu_goodssign`(`id`,`name`,`imgurl`,`type`,`instro`,`typevalue`) VALUES(\'24\',\'满减\',\'/upload/goods/20131109022416602.gif\',\'cx\',\'店铺购物车参加满减活动\',\'0\')',
+)?>

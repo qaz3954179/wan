@@ -1,0 +1,1 @@
+{"appid":"101098104","appkey":"ee956fec4ec2c74c90644c8a1ec123f8","callback":"http://182.92.108.93/member/otherlogin/logintype/qq","storageType":"file","host":"localhost","user":"root","password":"root","database":"test","scope":"get_user_info","errorReport":false}

@@ -1,0 +1,96 @@
+
+
+                   	
+<div id="gouwuchetoggle">
+	<div class="new_cart_show new_cart_top" id="new_cart_top">
+                   		 <div class="new_cart_goodsname">商品[<font style="color:#f60;cursor: pointer;" onclick="delshopcart();">清空</font>]</div> 
+                   	   <div class="new_cart_goodscount">数量</div>	
+                   		 <div class="new_cart_goodscost">单价</div>
+  </div>
+  <{assign var=allcost  value=0}> 
+  <{assign var=tempcost  value=0}> 
+ <{assign var=limitcost  value=0}> 
+  <{foreach from=$cartinfo['list']  key=ckkey item=items}>  
+   <{if $shopid ==  $ckkey}>  
+		  <div class="new_cart_items">
+
+		   <{foreach from=$items['data'] item=itv}>
+		   
+  		   <div class="new_cart_show" id="cartli_<{$itv['id']}>"> 
+                     	   <div class="new_cart_goodsname"><div class="left_cat_gd"><{$itv['name']}></div><div class="left_cat_cls"><span onclick="removesupplierdish(<{$itv['id']}>,<{$itv['shopid']}>);">×</span></div></div> 
+                     	   <div class="new_cart_goodscount">
+                     	   	<div class="goodscount_bk">
+                     	   	<span class="jian" onclick="removeonedish(<{$itv['id']}>,<{$itv['shopid']}>,1);">-</span><input type="text" id="cart_count<{$itv['id']}>" onblur="modifycart(<{$itv['id']}>,<{$itv['count']}>,<{$itv['shopid']}>);" value="<{$itv['count']}>" data="<{$itv['count']}>" class="goodsnum_show" value="1"><span class="jia"  onclick="uponedish(<{$itv['id']}>,<{$itv['shopid']}>,1);">+</span>
+                     	    </div>
+                     	   	
+                     	   	</div>	
+                     		 <div class="new_cart_goodscost">￥<{$itv['cost']}></div>
+         	</div>
+        
+		   
+		    
+		    
+		    	    <{$tempcost =$tempcost+ $itv['cost']*$itv['count']}> 
+		    
+		   <{/foreach}> 
+       </div>
+	   
+		  <{if is_array($items['cx']['zid'])}> 
+      <{foreach from=$items['cx']['zid'] item=itv}>
+			 
+		   <{/foreach}> 
+      <{/if}> 
+		 
+      <{$allcost = $items['pscost']+$items['bagcost']+$items['cx']['surecost']}> 
+		
+    <{$allcost = $allcost}>
+    
+    <{$limitcost = $items['limitcost']}>
+ <{/if}>
+  
+  
+<{/foreach}>
+
+<{if $items['pscost'] > 0 }>
+  <div style="height: 50px;
+line-height: 50px;
+padding-left: 10px;
+font-size:14px;
+padding-right: 10px;
+border-left: 1px solid #e1e1e1;
+border-top: 1px solid #e1e1e1;">
+		 <span style="float:left;">配送费</span>
+		  <span style="float:right; margin-right:20px;">￥<{$items['pscost']}></span>
+		  </div>
+<{/if}>
+		   <div style="height: 50px;
+line-height: 50px;
+padding-left: 10px;font-size:14px;
+padding-right: 10px;
+border-left: 1px solid #e1e1e1;
+border-top: 1px solid #e1e1e1;">
+		
+		  <span style="float:right; ">共<span style="margin: 0 3px;
+color: #FF6900;"><{$items['count']}></span>份,总计<span style="font-size: 16px;font-weight: bold;
+color: #FF6900;">￥<{$allcost}></span></span>
+		  </div>
+	   
+
+
+<div style="clear:both;"> </div>
+</div>
+<input type="hidden" id="caipincost"  value="<{$tempcost}>">
+<input type="hidden" id="cartallcost"  value="<{$allcost}>">
+ 
+
+<div class="new_cart_bottom" id="new_cat_bottom">
+<div onclick="carttoggle();" style="position:absolute; cursor:pointer;" title="点击隐藏或显示购物车"><img  src="<{$siteurl}>/templates/<{$tempdir}>/public/images/shop/carbg.png" /></div>
+<div class="fshetotal" style="display:none;position:absolute;color: #AAAAAA; font-size:14px;margin-left: 80px;margin-top: 10px;"><{$items['count']}>份 ￥<{$allcost}></div>
+	<{if $limitcost <= $tempcost}>
+	      <div onclick="ajaxdoorder();" class="ajaxorder">去下单</div>
+	<{else}>
+	<div  class="showlimit">差<{$limitcost-$tempcost}>元起送</div>
+	<{/if}>
+	</div>
+
+ 

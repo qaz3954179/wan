@@ -1,0 +1,143 @@
+ <{extends file="<{$tempdir}>/public/html5.html"}>  
+<{block name=extendcss}> 
+<link rel="stylesheet"  href="<{$siteurl}>/templates/<{$tempdir}>/public/html5/css/cart.css">   
+<{/block}>
+ <{block name=extendjs}> 
+<script src="<{$siteurl}>/templates/<{$tempdir}>/public/html5/js/cart.js"></script> 
+<script src="<{$siteurl}>/templates/<{$tempdir}>/public/html5/js/template.min.js"></script> 
+ 
+<script>
+$(function(){  	
+	freshcart();
+});	
+var shopid='<{$id}>';
+var  cartbagcost = 0;
+var  cartpscost = 0;
+var  cartsum = 0;
+var cxcost = 0;  
+var psarealist,psstarttime,psareagrade;
+  		 var starttime = '<{$shopinfo['starttime']}>'; 
+	 var is_orderbefore=<{$shopinfo['is_orderbefore']}>;
+	 var nowdate = '<{$nowdate}>';
+	 var nowtime = '<{$nowtime}>';
+
+	  var maketime = '<{$yanchitime}>';
+	  $(function(){ 	
+	maketimenenu();
+});
+function maketimenenu(){
+	var selectdate = $("select[name='Deliverydate']").find("option:selected").val(); 
+  $('#orderTime').html(''); 
+  var dotime = ''; 
+  	dotime = starttime.split('|'); 
+  for(var i=0;i<dotime.length;i++){ 
+  		var splittime = dotime[i].split('-');
+  		if(splittime.length > 0){
+  			//开始时间  结束时间
+  			var begindtime = selectdate+' '+splittime[0]+':00';
+  			var endtime = selectdate+' '+splittime[1]+':00'; 
+  			addhtml(begindtime,endtime);
+  		}
+  } 
+}
+function addhtml(begindtime,endtime){ 
+	var begindate = new Date(begindtime.replace(/-/g,'/'));
+	var enddate = new Date(endtime.replace(/-/g,'/'));
+	var bkdate = new Date(nowtime.replace(/-/g,'/'));
+	var begindates = Number(begindate.getTime());
+	var enddates = Number(enddate.getTime());
+	var bkdates = Number(bkdate.getTime());
+	var makenewtime =  new Date(maketime.replace(/-/g,'/'));
+	
+	if(bkdates > begindates && bkdates > enddates){ 
+		 
+  }else{  
+  	var setptime = 60*60*1000; 
+       for(var i=begindates;i<enddates;i=i+setptime){
+       	 if(i > bkdates && i>makenewtime){ 
+       	   var d = new Date()
+            d.setTime(i);
+            var nowhour = d.getHours();
+            var timesee =  Number(nowhour) < 10?'0'+nowhour:nowhour;
+            var nowminit = d.getMinutes();
+            timesee += Number(nowminit) < 10?':0'+nowminit:':'+nowminit;
+            $('#DeliveryTime').append('<option value="'+timesee+'">'+timesee+'</option>'); 
+         }
+	     }
+	} 
+}
+</script>
+ <script id="cartlist" type="text/html">    
+  	<ul class="listcontent mBxSch" price="<^%=list.cost%^>" supplierdishid="<^%=list.id%^>" id="gid_<^%=list.id%^>">
+  	  			<li class="mBxCm"><^%=list.name%^></li><li class="mBxCm"><div><a onclick="removeonedish(<^%=list.id%^>,<^%=list.shopid%^>,1); "></a><span id="quantity"><^%=list.count%^></span><a onclick="addonedish(<^%=list.id%^>,<^%=list.shopid%^>,1); "></a></div></li>
+  	  			<li class="mBxCm"><^%=list.cost%^></li><li class="mBxCm"><a class="del" onclick="removesupplierdish(<^%=list.id%^>,<^%=list.shopid%^>);">删除</a></li>
+   	</ul> 
+ </script>
+<{/block}>
+<{block name=sitetitle}><{$sitename}><{/block}>
+<{block name=blockcontent}> 
+<div id="shoppingbox">
+  	<header><div class="return"></div>商品列表</header>
+  	
+  	<div class="container notopborder"> 
+  	  	<section class="list">
+  	  		<ul class="listcapital mBxSch">
+  	  			<li>商品名称</li>
+  	  			<li>数量</li>
+  	  			<li>价格</li>
+  	  			<li>操作</li>
+  	  		</ul>
+  	  	 
+  	    </section>
+  	</div>
+  	<input class="inputInp" id="remark" type="text" placeholder="请输入备注信息(可不填)">
+  	<section class="transport">
+  		<div id="test" class="mBxCm">
+  		    <div class="mFlex1">支付方式：</div>
+  		    <div class="mFlex1"><input id="s1" type="radio" data-freedeliveryline="200.0000" data-delminorderamount="30" name="scfs" value="2" checked><label for="s1">货到付款</label></div> 
+  		</div> 
+  	 <div class="mBxCm">
+  		    <div class="mFlex1" id="deData">配送日期：</div>
+  		   
+  		    <div class="mFlex1"><select name="Deliverydate" id="Deliverydate" class="mFlex1" onclick="maketimenenu();">
+  		    	         <{if $shopinfo['befortime'] > 0}>
+								   	    <{assign var=shownow value= time()}>   
+								   	    <{section name=loop loop=$shopinfo['befortime']}>   
+								            <option value="<{$shownow|date_format:"%Y-%m-%d"}>"><{$shownow|date_format:"%Y-%m-%d"}></option>
+								          
+								            <{$shownow = $shownow+86400}>  
+                          <{/section}>  
+								   	 <{else}>
+								   	  <option value="<{time()|date_format:"%Y-%m-%d"}>"><{time()|date_format:"%Y-%m-%d"}></option>
+								   	  <{/if}> 
+  		    	</select></div>
+  		</div>
+  		<div class="mBxCm" style="border-top: 1px solid #dfdfdf;">
+  		    <div class="mFlex1" id="deTime">配送时间：</div>
+  		   
+  		    <div class="mFlex1"><select name="DeliveryTime" id="DeliveryTime" class="mFlex1">
+  		    
+  		    	</select></div>
+  		</div>
+  		 
+  		<div class="mBxCm">
+  		      <input id="username" class="inputInpa" type="text" placeholder="姓名" maxlength="20" value="<{$myaddressslist['contactname']|default:''}>" >
+  		</div>
+  	 
+  		<div class="mBxCm">
+  		       <input id="mobile" class="inputInpa" type="text" placeholder="联系电话" maxlength="20" value="<{$myaddressslist['phone']|default:''}>">
+  		</div>
+  		<div class="mBxCm">
+  		      <input id="addressdet" class="inputInpa" type="text" placeholder="地址详情" maxlength="20" value="<{$myaddressslist['address']|default:<{$areainfo}>}>" data="<{$areainfo}>">
+  		</div>
+  		</div>
+   </section>
+   
+   <div class="mBxCm bottomprise"><div class="mFlex1"><h3>打包费: ￥<span id="packagingFee">0.00</span></h3></div><div class="mf"><h3>配送费： ￥<span id="fixedDeliveryFee">0.00</span></h3></div></div>
+   <div class="mBxCm bottomprise noborders"><div class="mFlex1"><h3>&nbsp;</h3></div><div class="mf"><h3>合　计： ￥<span class="colred fontbold" id="totalFee">115.00</span></h3></div></div>
+   <{if $is_open== 1}>
+   <section class="muli"><input type="BUTTON" class="inputBtn" id="logSubmit" onclick="orderSubmit();" value="确认下单"></section>
+   <{else}>
+    <section class="muli"><input type="BUTTON" class="inputBtn" id="logSubmit"   value="店铺停止下单"></section>
+   <{/if}>
+<{/block}>
